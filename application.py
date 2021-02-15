@@ -22,7 +22,3 @@ def after_request(response):
 @app.route("/")
 def index():
     return render_template("index.html")
-
-if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
