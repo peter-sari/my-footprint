@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required
+from helpers.py import login_required
 
 # Configure application
 app = Flask(__name__)
