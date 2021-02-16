@@ -40,7 +40,6 @@ def after_request(response):
 
 
 @app.route("/")
-@login_required
 def index():
     return render_template("index.html")
 
@@ -78,10 +77,6 @@ def register():
         elif request.form.get("password") != request.form.get("confirmation"):
             return apology("passwords must match", 400)
 
-        print(username)
-        print(country)
-        print(birth_year)
-
         # Query database for username
         db.execute("SELECT * FROM dim_user WHERE username = %s", (username, ))
         rows = db.fetchall()
@@ -104,7 +99,6 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
     # Forget any user_id
     session.clear()
 
