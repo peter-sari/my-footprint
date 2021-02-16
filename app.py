@@ -54,6 +54,8 @@ def register():
         username = str(request.form.get("username"))
         country = str(request.form.get("country"))
         birth_year = int(request.form.get("birth_year"))
+        password = str(request.form.get("password"))
+        password_conf = str(request.form.get("confirmation"))
 
         # Ensure username was submitted
         if not username:
@@ -72,9 +74,9 @@ def register():
         #    return apology("invalid country", 400)
 
         # Ensure password was submitted
-        elif not request.form.get("password"):
+        if not password:
             return apology("must provide password", 400)
-        elif request.form.get("password") != request.form.get("confirmation"):
+        if password != password_conf:
             return apology("passwords must match", 400)
 
         # Query database for username
@@ -86,7 +88,7 @@ def register():
             return apology("user already exists", 400)
         else:
             db.execute("INSERT INTO dim_user (username, birth_year, country, password_hash) VALUES(%s, %s, %s, %s)",
-                       (username, birth_year, country, generate_password_hash(request.form.get("password"),)))
+                       (username, birth_year, country, generate_password_hash(password,)))
 
         # Redirect user to home page
         return redirect("/")
