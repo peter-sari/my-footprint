@@ -1,0 +1,65 @@
+
+body{
+    font-size: 14px;
+    font-family: arial,sans-serif;
+    color: #222;
+    display: flex;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+#container{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    vertical-align: middle;
+    text-align: center;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;                
+}
+
+input[type=text] {
+    border: 0.5px solid lightgrey;
+    border-radius: 30px;
+    padding: 5px;
+    height: 30px;
+    background-image: url('https://www.ee.ucl.ac.uk/images/searchIcon.png/image');
+    background-position: 15px 15px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+
+input[type=button], input[type=submit]{
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+input:hover {
+box-shadow: 0 1px 1px rgba(0,0,0,.1);
+border: 1px solid #dadce0;
+color: #202124;
+}
+
+input[type="submit"]:focus {
+border: 1px solid #4d90fe;
+outline: none;
+}
