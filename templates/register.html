@@ -7,22 +7,17 @@
 {% block main %}
 <div id="container">
     <form action="/register" method="post">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="birth_year" placeholder="Birth Year" type="number" min="1920" max="2020">
-        </div>
+        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        <input autocomplete="off" autofocus class="form-control" name="birth_year" placeholder="Birth Year" type="number" min="1920" max="2020">
         <select name="country">
             <option value="" disabled selected>Select your country</option>
-            {% for country in countries %}
-                <option value= "{{ country.name }}">{{country.name}}</option>"
-            {% endfor %}
+                {% for country in countries %}
+                    <option value= "{{ country.name }}">{{country.name}}</option>"
+                {% endfor %}
         </select>
-        <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
-            <input class="form-control" name="confirmation" placeholder="Confirmation" type="password">
-        </div>
+        <input class="form-control" name="password" placeholder="Password" type="password">
+        <input class="form-control" name="confirmation" placeholder="Confirmation" type="password">
+        
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
 </div>    
