@@ -14,6 +14,7 @@
             <input autocomplete="off" autofocus class="form-control" name="birth_year" placeholder="Birth Year" type="number" min="1920" max="2020">
         </div>
         <select name="country">
+            <option value="" disabled selected>Select your country</option>
             {% for country in countries %}
                 <option value= "{{ country.name }}">{{country.name}}</option>"
             {% endfor %}
