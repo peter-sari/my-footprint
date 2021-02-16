@@ -25,7 +25,11 @@ input:focus {
   max-width: 600px;
 }
 
-input[type="text"], input[type="password"], input[type="confirmation"], input[type="number"] {
+input[type="text"],
+input[type="password"],
+input[type="confirmation"],
+input[type="number"],
+select {
   border: 0.5px solid lightgrey;
   border-radius: 30px;
   padding: 5px;
@@ -63,4 +67,14 @@ input:hover {
 input[type="submit"]:focus {
   border: 1px solid #4d90fe;
   outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
