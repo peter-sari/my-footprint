@@ -50,7 +50,7 @@ def register():
     if request.method == "POST":
         username = str(request.form.get("username"))
         country = str(request.form.get("country"))
-        birth_year = int(request.form.get("birth_year"))
+        birth_year = request.form.get("birth_year")
         password = str(request.form.get("password"))
         password_conf = str(request.form.get("confirmation"))
 
@@ -63,6 +63,9 @@ def register():
         # Ensure BY was submitted
         if not birth_year:
             return apology("must provide username", 400)
+        else:
+            birth_year = int(birth_year)
+            
         if birth_year < 1920 or birth_year > 2020:
             return apology("invalid birth year", 400)
 
