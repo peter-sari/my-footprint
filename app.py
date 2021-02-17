@@ -25,12 +25,9 @@ Session(app)
 DATABASE_URL = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 conn.autocommit = True
-
 db = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 # Ensure responses aren't cached
-
-
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
