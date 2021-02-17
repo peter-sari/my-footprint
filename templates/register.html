@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block main %}
-<div id="container">
+<div class="flex">
+<div class="container">
     <form action="/register" method="post">
         <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
         <input autocomplete="off" autofocus class="form-control" name="birth_year" placeholder="Birth Year" type="number" min="1920" max="2020">
@@ -20,5 +21,6 @@
         
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
-</div>    
+</div> 
+</div>   
 {% endblock %}

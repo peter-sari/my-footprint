@@ -2,11 +2,13 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<div id="container">
+<div class="flex">
+<div class="container">
     <form action="/login" method="post">
         <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
         <input class="form-control" name="password" placeholder="Password" type="password">
         <button class="btn btn-primary" type="submit">Log In</button>
     </form>
+</div>
 </div>
 {% endblock %}

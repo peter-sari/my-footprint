@@ -4,16 +4,16 @@ body {
   color: #222;
 }
 
-main {
-  display: flex;
-}
-
 textarea:focus,
 input:focus {
   outline: none;
 }
 
-#container {
+.flex {
+  display: flex;
+}
+
+.container {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -78,7 +78,6 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-form {
-  text-align: center;
-  margin: auto;
+.question{
+  text-align: left;
 }

@@ -65,7 +65,7 @@ def register():
             return apology("must provide username", 400)
         else:
             birth_year = int(birth_year)
-            
+
         if birth_year < 1920 or birth_year > 2020:
             return apology("invalid birth year", 400)
 
@@ -147,11 +147,23 @@ def logout():
     # Forget any user_id
     session.clear()
 
-    # Redirect user to login form
+    # Redirect user to main
     return redirect("/")
 
-@app.route("/quiz")
+@app.route("/quiz", methods=["GET", "POST"])
 @login_required
 def quiz():
     """Quiz"""
-    return render_template("quiz.html")
+    if request.method == "GET":
+        
+        quizitems = [
+            { "id": 1, "question" : "drink coffee", "description" : "Coffee farming often involves exploitation of local farmers."},
+            { "id": 2, "question" : "eat beef", "description" : "Cattle is a massive contributor to deforestation and green house gasses."}
+        ]
+        return render_template("quiz.html", quizitems=quizitems)
+
+    if request.method == "POST":
+        # update databases
+
+
+        return redirect("/")
