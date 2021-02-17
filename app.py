@@ -123,7 +123,7 @@ def login():
 
         # Ensure username exists and password is correct
         if not check_password_hash(pw_hash, pw_form):
-            return apology("invalid username and/or password", 403)
+            return apology("check username and password", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
