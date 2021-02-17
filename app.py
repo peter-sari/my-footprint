@@ -146,3 +146,9 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+@app.route("/quiz")
+@login_required
+def quiz():
+    """Quiz"""
+    return render_template("quiz.html")
