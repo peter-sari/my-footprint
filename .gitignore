@@ -1,2 +1,4 @@
 .vscode/settings.json
 *.pyc
+__pycache__/app.cpython-39.pyc
+__pycache__/helpers.cpython-39.pyc

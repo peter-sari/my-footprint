@@ -156,11 +156,22 @@ def quiz():
     """Quiz"""
     if request.method == "GET":
         
-        quizitems = [
-            { "id": 1, "question" : "drink coffee", "description" : "Coffee farming often involves exploitation of local farmers."},
-            { "id": 2, "question" : "eat beef", "description" : "Cattle is a massive contributor to deforestation and green house gasses."}
-        ]
-        return render_template("quiz.html", quizitems=quizitems)
+        quizitems = []
+        db.execute("SELECT * FROM dim_activity")
+        rows = db.fetchall()
+        
+        for row in rows:
+            quizitems.append({"id": row["id"], "question": row["name"], "description": row["description"]})
+
+        frequencyitems = []
+        db.execute("SELECT * FROM dim_frequency")
+        rows = db.fetchall()
+
+        for row in rows:
+            frequencyitems.append({"id": row["id"], "name": row["name"], "weight": row["weight"]})
+
+        
+        return render_template("quiz.html", quizitems=quizitems, frequencyitems=frequencyitems)
 
     if request.method == "POST":
         # update databases

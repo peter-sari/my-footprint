@@ -7,21 +7,18 @@
     <table>
         <thead>
             <th class="question">How often do you...</th>
-            <th>More than once a day</th>
-            <th>Once a day</th>
-            <th>Few times a week</th>
-            <th>Few times a month</th>
-            <th>Never</th>
+            {% for frequencyitem in frequencyitems %}
+                <th>{{frequencyitem.name}}</th>
+            {% endfor %}
+            
         </thead>
         <tbody>
             {% for quizitem in quizitems %}
             <tr style="border-top:1pt solid black;">
                 <td  class="question">{{quizitem.question}}</td>
-                <td><input type="radio" name={{quizitem.id}} id="1" value="1"/></td>
-                <td><input type="radio" name={{quizitem.id}} id="2" value="2"/></td>
-                <td><input type="radio" name={{quizitem.id}} id="3" value="3"/></td>
-                <td><input type="radio" name={{quizitem.id}} id="4" value="4"/></td>
-                <td><input type="radio" name={{quizitem.id}} id="5" value="5"/></td>
+                {% for frequencyitem in frequencyitems %}
+                    <td><input type="radio" name={{quizitem.id}} id = {{frequencyitem.id}} value = {{frequencyitem.weight}}/> </td>
+                {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
