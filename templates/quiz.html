@@ -18,6 +18,7 @@
                 <td  class="question">{{quizitem.question}}</td>
                 {% for frequencyitem in frequencyitems %}
                     <td><input type="radio" name={{quizitem.id}} id = {{frequencyitem.id}} value = {{frequencyitem.id}}> </td>
+                    <input type="hidden" name={{quizitem.id}} id = {{frequencyitem.id}} value = 5 checked="checked">
                 {% endfor %}
             </tr>
             {% endfor %}
