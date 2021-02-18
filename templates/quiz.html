@@ -3,7 +3,7 @@
 
 {% block main %}
 <div class="container">
-<form name="quizitems" action="/quiz" method="post">
+<form action="/quiz" method="post">
     <table>
         <thead>
             <th class="question">How often do you...</th>
@@ -17,7 +17,7 @@
             <tr style="border-top:1pt solid black;">
                 <td  class="question">{{quizitem.question}}</td>
                 {% for frequencyitem in frequencyitems %}
-                    <td><input type="radio" name={{quizitem.id}} id = {{frequencyitem.id}} value = {{frequencyitem.id}}/> </td>
+                    <td><input type="radio" name={{quizitem.id}} id = {{frequencyitem.id}} value = {{frequencyitem.id}}> </td>
                 {% endfor %}
             </tr>
             {% endfor %}

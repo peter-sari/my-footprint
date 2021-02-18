@@ -1,5 +1,26 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <p>Hello World!</p>
+    {% if session.user_id %}
+        {% if quizitems is defined %}
+            <table>
+                <thead>
+                    <th class="question">Impact Factor</th>
+                    <th class="question">Footprint</th>
+                </thead>
+                <tbody>
+                    {% for quizitem in quizitems %}
+                    <tr style="border-top:1pt solid black;">
+                        <td  class="question">{{quizitem.impact_factor}}</td>
+                        <td  class="question">{{quizitem.footprint}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You need to do the quiz first</p>
+        {% endif %}
+    {% else %}
+        <p>You need to log in to see your footprint</p>
+    {% endif %}
 {% endblock %}

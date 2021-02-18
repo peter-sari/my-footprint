@@ -35,8 +35,37 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    # if logged in...
+    if session["user_id"]:
+        sql_exec =  "SELECT                                                                  " \
+                    "     QA.user_id                                                         " \
+                    "     , DF.name AS impact_factor                                         " \
+                    "     , SUM(FAFFW.impact_weight * FAFFW.frequency_weight) AS Footprint   " \
+                    " FROM public.fact_quiz_answers QA                                       " \
+                    " INNER JOIN public.fact_activity_factor_freq_weights FAFFW              " \
+                    " ON 1=1                                                                 " \
+                    "     AND QA.activity_id = FAFFW.activity_id                             " \
+                    "     AND QA.frequency_id = FAFFW.frequency_id                           " \
+                    " INNER JOIN public.dim_impact_factors DF                                " \
+                    " ON 1=1                                                                 " \
+                    "     AND DF.id = FAFFW.impact_factor_id                                 " \
+                    " WHERE 1=1                                                              " \
+                    "     AND QA.user_id = %s                                                " \
+                    " GROUP BY  QA.user_id, DF.name                                          " \
+                    "     ;                                                                  " 
+        db.execute(sql_exec, (session["user_id"] ,))
+        rows = db.fetchall()
 
+        # check quiz has been done
+        if len(rows) != 0:
+            quizitems = []
+            
+            for row in rows:
+                quizitems.append({"impact_factor": row["impact_factor"], "footprint": row["footprint"]})
+
+            return render_template("index.html", quizitems=quizitems)
+        else:
+            return render_template("index.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -195,11 +224,13 @@ def quiz():
 
     if request.method == "POST":
         # update databases
+        sql_exec = "INSERT INTO fact_quiz_answers (user_id, activity_id, frequency_id)" \
+                    "	VALUES (%s, %s , %s) " \
+                    "	ON CONFLICT (user_id, activity_id)  DO UPDATE SET frequency_id = EXCLUDED.frequency_id" \
 
-        # TODO -->> this isn't working.
-        quizreplies = request.form.getlist("quizitems[]")
-        print(quizreplies)
-        for quizreply in quizreplies:
-            print(quizreply["id"])
-            print(quizreply["value"])
+        quizreplies_form = request.form
+        for key, value in quizreplies_form.items():
+            #print(key, value)
+            db.execute(sql_exec, (session["user_id"] , key, value,))
+              
         return redirect("/")
