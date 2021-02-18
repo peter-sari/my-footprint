@@ -138,6 +138,7 @@ def login():
         return render_template("login.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     """Log user out"""
 
@@ -146,6 +147,29 @@ def logout():
 
     # Redirect user to main
     return redirect("/")
+
+@app.route("/change_pwd",  methods=["GET", "POST"])
+@login_required
+def change_pwd():   
+    if request.method == "POST":
+        password = str(request.form.get("password"))
+        password_conf = str(request.form.get("confirmation"))
+
+        # Ensure password was submitted
+        if not password:
+            return apology("must provide password", 400)
+        if password != password_conf:
+            return apology("passwords must match", 400)
+
+        db.execute("UPDATE dim_user SET password_hash = %s WHERE username = %s",
+				    (generate_password_hash(password), session["username"], ))
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("change_pwd.html")
 
 @app.route("/quiz", methods=["GET", "POST"])
 @login_required

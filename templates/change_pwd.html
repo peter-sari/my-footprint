@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change Password
+{% endblock %}
+
+{% block main %}
+<div class="flex">
+    <div class="container">
+        <form action="/change_pwd" method="post">
+            <input class="form-control" name="password" placeholder="New Password" type="password">
+            <input class="form-control" name="confirmation" placeholder="Confirmation" type="password">
+            
+            <button class="btn btn-primary" type="submit">Change Password</button>
+        </form>
+    </div> 
+</div>   
+{% endblock %}
