@@ -16,10 +16,7 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+app.secret_key = os.getenv("SECRET_KEY")
 
 # config sql db
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -102,7 +99,7 @@ def register():
 def login():
     """Log user in"""
     # Forget any user_id
-    session.clear()
+    session.pop('username', None)
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
