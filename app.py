@@ -116,11 +116,12 @@ def login():
         db.execute("SELECT * FROM dim_user WHERE username = %s", (username, ))
         rows = db.fetchall()
 
-        pw_hash = rows[0]["password_hash"]
-        pw_form = str(request.form.get("password"))
         if len(rows) == 0:
             return apology("no such user", 403)
 
+        pw_hash = rows[0]["password_hash"]
+        pw_form = str(request.form.get("password"))
+        
         # Ensure username exists and password is correct
         if not check_password_hash(pw_hash, pw_form):
             return apology("check username and password", 403)
@@ -135,7 +136,6 @@ def login():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
-
 
 @app.route("/logout")
 def logout():
@@ -165,13 +165,17 @@ def quiz():
         rows = db.fetchall()
 
         for row in rows:
-            frequencyitems.append({"id": row["id"], "name": row["name"], "weight": row["weight"]})
+            frequencyitems.append({"id": row["id"], "name": row["name"]})
 
-        
         return render_template("quiz.html", quizitems=quizitems, frequencyitems=frequencyitems)
 
     if request.method == "POST":
         # update databases
 
-
+        # TODO -->> this isn't working.
+        quizreplies = request.form.getlist("quizitems[]")
+        print(quizreplies)
+        for quizreply in quizreplies:
+            print(quizreply["id"])
+            print(quizreply["value"])
         return redirect("/")
