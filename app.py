@@ -36,7 +36,7 @@ def after_request(response):
 @app.route("/")
 def index():
     # if logged in...
-    if session["user_id"]:
+    if session:
         sql_exec =  "SELECT                                                                  " \
                     "     QA.user_id                                                         " \
                     "     , DF.name AS impact_factor                                         " \
@@ -66,6 +66,8 @@ def index():
             return render_template("index.html", quizitems=quizitems)
         else:
             return render_template("index.html")
+    else:
+        return render_template("index.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
