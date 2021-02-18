@@ -15,7 +15,7 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# Configure session 
+# Configure session
 app.secret_key = os.getenv("SECRET_KEY")
 
 # config sql db
@@ -25,6 +25,8 @@ conn.autocommit = True
 db = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 # Ensure responses aren't cached
+
+
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -37,37 +39,40 @@ def after_request(response):
 def index():
     # if logged in...
     if session:
-        sql_exec =  "SELECT                                                                  " \
-                    "     QA.user_id                                                         " \
-                    "     , DF.name AS impact_factor                                         " \
-                    "     , SUM(FAFFW.impact_weight * FAFFW.frequency_weight) AS Footprint   " \
-                    " FROM public.fact_quiz_answers QA                                       " \
-                    " INNER JOIN public.fact_activity_factor_freq_weights FAFFW              " \
-                    " ON 1=1                                                                 " \
-                    "     AND QA.activity_id = FAFFW.activity_id                             " \
-                    "     AND QA.frequency_id = FAFFW.frequency_id                           " \
-                    " INNER JOIN public.dim_impact_factors DF                                " \
-                    " ON 1=1                                                                 " \
-                    "     AND DF.id = FAFFW.impact_factor_id                                 " \
-                    " WHERE 1=1                                                              " \
-                    "     AND QA.user_id = %s                                                " \
-                    " GROUP BY  QA.user_id, DF.name                                          " \
-                    "     ;                                                                  " 
-        db.execute(sql_exec, (session["user_id"] ,))
+        sql_exec = "SELECT                                                           " \
+            "     QA.user_id                                                         " \
+            "     , DF.name AS impact_factor                                         " \
+            "     , SUM(FAFFW.impact_weight * FAFFW.frequency_weight) AS Footprint   " \
+            " FROM public.fact_quiz_answers QA                                       " \
+            " INNER JOIN public.fact_activity_factor_freq_weights FAFFW              " \
+            " ON 1=1                                                                 " \
+            "     AND QA.activity_id = FAFFW.activity_id                             " \
+            "     AND QA.frequency_id = FAFFW.frequency_id                           " \
+            " INNER JOIN public.dim_impact_factors DF                                " \
+            " ON 1=1                                                                 " \
+            "     AND DF.id = FAFFW.impact_factor_id                                 " \
+            " WHERE 1=1                                                              " \
+            " AND QA.user_id = %s                                                    " \
+            " GROUP BY  QA.user_id, DF.name                                          " \
+            " ORDER BY Footprint DESC                                                " \
+            "     ;                                                                  "
+        db.execute(sql_exec, (session["user_id"],))
         rows = db.fetchall()
 
         # check quiz has been done
         if len(rows) != 0:
             quizitems = []
-            
+
             for row in rows:
-                quizitems.append({"impact_factor": row["impact_factor"], "footprint": row["footprint"]})
+                quizitems.append(
+                    {"impact_factor": row["impact_factor"], "footprint": row["footprint"]})
 
             return render_template("index.html", quizitems=quizitems)
         else:
             return render_template("index.html")
     else:
         return render_template("index.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -152,7 +157,7 @@ def login():
 
         pw_hash = rows[0]["password_hash"]
         pw_form = str(request.form.get("password"))
-        
+
         # Ensure username exists and password is correct
         if not check_password_hash(pw_hash, pw_form):
             return apology("check username and password", 403)
@@ -168,6 +173,7 @@ def login():
     else:
         return render_template("login.html")
 
+
 @app.route("/logout")
 @login_required
 def logout():
@@ -179,9 +185,10 @@ def logout():
     # Redirect user to main
     return redirect("/")
 
+
 @app.route("/change_pwd",  methods=["GET", "POST"])
 @login_required
-def change_pwd():   
+def change_pwd():
     if request.method == "POST":
         password = str(request.form.get("password"))
         password_conf = str(request.form.get("confirmation"))
@@ -193,7 +200,7 @@ def change_pwd():
             return apology("passwords must match", 400)
 
         db.execute("UPDATE dim_user SET password_hash = %s WHERE username = %s",
-				    (generate_password_hash(password), session["username"], ))
+                   (generate_password_hash(password), session["username"], ))
 
         # Redirect user to home page
         return redirect("/")
@@ -202,18 +209,20 @@ def change_pwd():
     else:
         return render_template("change_pwd.html")
 
+
 @app.route("/quiz", methods=["GET", "POST"])
 @login_required
 def quiz():
     """Quiz"""
     if request.method == "GET":
-        
+
         quizitems = []
         db.execute("SELECT * FROM dim_activity")
         rows = db.fetchall()
-        
+
         for row in rows:
-            quizitems.append({"id": row["id"], "question": row["name"], "description": row["description"]})
+            quizitems.append(
+                {"id": row["id"], "question": row["name"], "description": row["description"]})
 
         frequencyitems = []
         db.execute("SELECT * FROM dim_frequency")
@@ -227,12 +236,12 @@ def quiz():
     if request.method == "POST":
         # update databases
         sql_exec = "INSERT INTO fact_quiz_answers (user_id, activity_id, frequency_id)" \
-                    "	VALUES (%s, %s , %s) " \
-                    "	ON CONFLICT (user_id, activity_id)  DO UPDATE SET frequency_id = EXCLUDED.frequency_id" \
+            "	VALUES (%s, %s , %s) " \
+            "	ON CONFLICT (user_id, activity_id)  DO UPDATE SET frequency_id = EXCLUDED.frequency_id" \
 
         quizreplies_form = request.form
         for key, value in quizreplies_form.items():
             #print(key, value)
-            db.execute(sql_exec, (session["user_id"] , key, value,))
-              
+            db.execute(sql_exec, (session["user_id"], key, value,))
+
         return redirect("/")
