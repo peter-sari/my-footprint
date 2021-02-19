@@ -37,11 +37,9 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    # if logged in...
-    if session:
-        sql_exec = "SELECT                                                           " \
-            "     QA.user_id                                                         " \
-            "     , DF.name AS impact_factor                                         " \
+    
+    sql_exec = "SELECT                                                           " \
+            "       DF.name AS impact_factor                                         " \
             "     , SUM(FAFFW.impact_weight * FAFFW.frequency_weight) AS Footprint   " \
             " FROM public.fact_quiz_answers QA                                       " \
             " INNER JOIN public.fact_activity_factor_freq_weights FAFFW              " \
@@ -52,10 +50,13 @@ def index():
             " ON 1=1                                                                 " \
             "     AND DF.id = FAFFW.impact_factor_id                                 " \
             " WHERE 1=1                                                              " \
-            " AND QA.user_id = %s                                                    " \
-            " GROUP BY  QA.user_id, DF.name                                          " \
+            " GROUP BY DF.name                                                       " \
             " ORDER BY Footprint DESC                                                " \
             "     ;                                                                  "
+    
+    # if logged in...
+    if session:
+        sql_exec = sql_exec.replace("WHERE 1=1","WHERE QA.user_id = %s")
         db.execute(sql_exec, (session["user_id"],))
         rows = db.fetchall()
 
@@ -71,45 +72,21 @@ def index():
         else:
             return render_template("index.html")
     else:
-        sql_exec =  "SELECT                                                                  " \
-                    "       DF.name AS impact_factor                                         " \
-                    "     , SUM(FAFFW.impact_weight * FAFFW.frequency_weight) AS Footprint   " \
-                    " FROM public.fact_quiz_answers QA                                       " \
-                    " INNER JOIN public.fact_activity_factor_freq_weights FAFFW              " \
-                    " ON 1=1                                                                 " \
-                    "     AND QA.activity_id = FAFFW.activity_id                             " \
-                    "     AND QA.frequency_id = FAFFW.frequency_id                           " \
-                    " INNER JOIN public.dim_impact_factors DF                                " \
-                    " ON 1=1                                                                 " \
-                    "     AND DF.id = FAFFW.impact_factor_id                                 " \
-                    " GROUP BY   DF.name                                          			 " \
-                    " ORDER BY Footprint DESC                                                " \
-                    "     ;                                                                  "
-
-        sql_count = "SELECT                                                                  " \
-                    "     COUNT(DISTINCT user_id)                                            " \
-                    "FROM                                                                    " \
-                    "     public.fact_quiz_answers                                           " \
-                    "     ;                                                                  " \
-                        
+        sql_exec = sql_exec.replace(" AS Footprint","/COUNT(DISTINCT user_id) AS Footprint")
         db.execute(sql_exec)
         rows = db.fetchall()
-        db.execute(sql_count)
-        count = db.fetchall()
 
         quizitems = []
         for row in rows:
             quizitems.append(
-                {"impact_factor": row["impact_factor"], "footprint": int(row["footprint"]/count[0][0])})
+                {"impact_factor": row["impact_factor"], "footprint": int(row["footprint"])})
 
         return render_template("index.html", quizitems=quizitems,)
         
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    session.clear()
+    session.pop('username', None)
     countries = pycountry.countries
 
     if request.method == "POST":
@@ -212,7 +189,7 @@ def logout():
     """Log user out"""
 
     # Forget any user_id
-    session.clear()
+    session.pop('username', None)
 
     # Redirect user to main
     return redirect("/")
