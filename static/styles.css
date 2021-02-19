@@ -3,6 +3,10 @@ body {
   font-family: arial, sans-serif;
   color: #222;
   background-color: lightskyblue;
+  background-image: url("/static/backg.png");
+  background-repeat: no-repeat;
+  background-position: right -20%;
+  background-blend-mode: screen;
 }
 
 textarea:focus,
