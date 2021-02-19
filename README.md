@@ -18,6 +18,7 @@ We worked in a pair to simulate a co-working situation. Using Heroku and GitHub 
 - user sessions securely managed at server side
 - using json to include file use and ensure the opportunity to amend with external content through an API
 - using HTML, CSS and Bootstrap to create the front-end
+- ensuring the website is properly displayed on all types of screens due to responsive design
 
 ##TASK SHARING
 Most of the visual design and front-end was done by Peter. The SQL backend was done by Viktor and the python/flask coding was shared around half-half.
