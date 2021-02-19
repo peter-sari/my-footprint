@@ -118,3 +118,12 @@ h1{
   padding: 10px;
   margin: 0px;
 }
+
+#promoted{
+  position: absolute;
+  top: 75%; 
+  margin-left: 15%;
+  margin-right: 15%;
+
+  max-width: 800px;
+  }

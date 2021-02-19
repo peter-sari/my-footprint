@@ -8,6 +8,7 @@ import pycountry
 import os
 import psycopg2
 import psycopg2.extras
+import json
 
 # Configure application
 app = Flask(__name__)
@@ -25,6 +26,11 @@ conn.autocommit = True
 db = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 # Ensure responses aren't cached
+
+# read promoted content file
+with open('static/promoted.json', 'r') as myfile:
+    data=myfile.read()
+promoted = json.loads(data)
 
 
 @app.after_request
@@ -81,7 +87,7 @@ def index():
             quizitems.append(
                 {"impact_factor": row["impact_factor"], "footprint": int(row["footprint"])})
 
-        return render_template("index.html", quizitems=quizitems,)
+        return render_template("index.html", quizitems=quizitems, promoted=promoted)
         
 @app.route("/register", methods=["GET", "POST"])
 def register():
