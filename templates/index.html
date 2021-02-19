@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block main %}
-
 <div class="container">
     {% if quizitems is defined %}
         {% if session.user_id %}
@@ -36,6 +35,7 @@
         <p>You need to do the quiz first</p>
     {% endif %}
     </div>
+    <br>
     <div>
         <div class="row" id="promoted">
             {% for news in promoted %}
@@ -49,7 +49,5 @@
             {%endfor%}
         </div>
     </div>
-
-
-
+    <br>
 {% endblock %}
