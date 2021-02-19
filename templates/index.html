@@ -2,9 +2,9 @@
 
 {% block main %}
 
-    {% if session.user_id %}
-        {% if quizitems is defined %}
-        <div class="container">
+<div class="container">
+    {% if quizitems is defined %}
+        {% if session.user_id %}
             <h1>Thank you </h1>
             <p class="normaltext">for completing our footprint questionaire! Based on your answers you can see the impact your behaviour has on our world. A little change here and there can make a big difference. Feel free to <a href="/quiz">complete the quiz again</a> to see how your lifestyle changes influence the outcome.</p>
         {% else %}    
