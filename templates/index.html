@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
     {% if session.user_id %}
         {% if quizitems is defined %}
         <div class="container">
@@ -10,7 +16,7 @@
             <table style="width: 100%;">
                 <thead>
                     <th class="question">Impact on</th>
-                    <th class="answer">Footprint factor</th>
+                    <th style="text-align: right">Footprint factor</th>
                 </thead>
                 <tbody>
                     {% for quizitem in quizitems %}
@@ -21,7 +27,7 @@
                         {% else %}
                             <tr style="border-top:1pt solid black; background-color:orangered;">
                         {% endif %}
-                        <td  class="question">{{quizitem.impact_factor}}</td>
+                        <td  class="question"><p class="q" data-toggle="tooltip" title = {{quizitem.description}}>{{quizitem.impact_factor}}</p></td>
                         <td  class="answer">{{quizitem.footprint}}</td>
                     </tr>
                     {% endfor %}
@@ -41,7 +47,7 @@
             <table style="width: 100%;">
                 <thead>
                     <th class="question">Impact on</th>
-                    <th class="answer">Footprint factor</th>
+                    <th style="text-align: right">Footprint factor</th>
                 </thead>
                 <tbody>
                     {% for quizitem in quizitems %}
@@ -52,12 +58,13 @@
                         {% else %}
                             <tr style="border-top:1pt solid black; background-color:orangered;">
                         {% endif %}
-                        <td  class="question">{{quizitem.impact_factor}}</td>
+                        <td  class="question"><p class="q" data-toggle="tooltip" title = {{quizitem.description}}>{{quizitem.impact_factor}}</p></td>
                         <td  class="answer">{{quizitem.footprint}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            
         </div>        
 
 

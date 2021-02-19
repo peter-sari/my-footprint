@@ -2,6 +2,11 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
 <div class="container">
 <form action="/quiz" method="post">
     <table>
@@ -15,7 +20,7 @@
         <tbody>
             {% for quizitem in quizitems %}
             <tr style="border-top:1pt solid black;">
-                <td  class="question">{{quizitem.question}}</td>
+                <td  class="question"><p class="q" data-toggle="tooltip" title = {{quizitem.description}}>{{quizitem.question}}</p></td>
                 {% for frequencyitem in frequencyitems %}
                     <td><input type="radio" name={{quizitem.id}} id = {{frequencyitem.id}} value = {{frequencyitem.id}}> </td>
                 {% endfor %}

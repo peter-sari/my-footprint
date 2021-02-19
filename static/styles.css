@@ -87,12 +87,21 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.q{
+  text-align: left;
+  margin: 0px;
+  padding: 2px;
+}
+
 .question{
   text-align: left;
+  margin: 0px;
+  padding: 2px;
 }
 
 .answer{
   text-align: right;
+  padding-right: 10px;
 }
 
 .normaltext{
