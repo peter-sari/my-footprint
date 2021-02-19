@@ -36,4 +36,20 @@
         <p>You need to do the quiz first</p>
     {% endif %}
     </div>
+    <div>
+        <div class="row" id="promoted">
+            {% for news in promoted %}
+            <div class="col-lg-3 col-sm-6">
+                <div class="news">
+                    <p style="text-align: center;"><a href='{{news.url}}' target="_blank">{{news.title}}</a></p>
+                    <p style="text-align: center;"><img class="newsimage" src='{{news.image}}'></p>
+                    <p>{{news.lead}}</p>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+
+
+
 {% endblock %}

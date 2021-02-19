@@ -1,14 +1,26 @@
 [
 {
-    "title" : "test",
-    "url" : "https://www.google.com",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-    "lead": "Test bodycopy"
+    "title" : "Wateraid",
+    "url" : "https://www.wateraid.org",
+    "image": "https://www.wateraid.org/uk/themes/custom/wateraid_base_theme/wateraid-tall.png",
+    "lead": "WaterAid is an international non-governmental organisation, focused on water, sanitation and hygiene. It was set up in 1981 as a response to the UN International Drinking Water decade."
 },
 {
-    "title" : "",
-    "url" : "",
-    "image": "",
-    "lead": ""
+    "title" : "WWF",
+    "url" : "https://www.wwf.org.uk",
+    "image": "https://1000logos.net/wp-content/uploads/2017/05/WWF-logo-768x769.png",
+    "lead": "The World Wide Fund for Nature is an international non-governmental organization founded in 1961 that works in the field of wilderness preservation and the reduction of human impact on the environment."
+},
+{
+    "title" : "Woodland Trust",
+    "url" : "https://www.woodlandtrust.org.uk",
+    "image": "https://www.wcl.org.uk/im/logo-woodland.jpg",
+    "lead": "The Woodland Trust is the largest woodland conservation charity in the United Kingdom concerned with the creation, protection, and restoration of native woodland heritage. It has planted over 43 million trees since 1972."
+},
+{
+    "title" : "Anti-Slavery International",
+    "url" : "https://www.antislavery.org/",
+    "image": "https://www.antislavery.org/wp-content/uploads/2017/02/ASI-logo-high-res-no-tagline.jpg",
+    "lead": "Founded in 1839, we are the oldest international human rights organisation in the world."
 }
 ]
