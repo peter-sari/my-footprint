@@ -86,7 +86,7 @@ def index():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    session.pop('username', None)
+    session.clear()
     countries = pycountry.countries
 
     if request.method == "POST":
@@ -144,7 +144,7 @@ def register():
 def login():
     """Log user in"""
     # Forget any user_id
-    session.pop('username', None)
+    session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -189,7 +189,7 @@ def logout():
     """Log user out"""
 
     # Forget any user_id
-    session.pop('username', None)
+    session.clear()
 
     # Redirect user to main
     return redirect("/")
