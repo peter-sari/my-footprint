@@ -1,11 +1,7 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<script>
-    $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
+
 
     {% if session.user_id %}
         {% if quizitems is defined %}
@@ -27,7 +23,7 @@
                         {% else %}
                             <tr style="border-top:1pt solid black; background-color:orangered;">
                         {% endif %}
-                        <td  class="question"><p class="q" data-toggle="tooltip" title = {{quizitem.description}}>{{quizitem.impact_factor}}</p></td>
+                        <td  class="question"><p class="q">{{quizitem.impact_factor}}</p></td>
                         <td  class="answer">{{quizitem.footprint}}</td>
                     </tr>
                     {% endfor %}
@@ -58,7 +54,7 @@
                         {% else %}
                             <tr style="border-top:1pt solid black; background-color:orangered;">
                         {% endif %}
-                        <td  class="question"><p class="q" data-toggle="tooltip" title = {{quizitem.description}}>{{quizitem.impact_factor}}</p></td>
+                        <td  class="question"><p class="q">{{quizitem.impact_factor}}</p></td>
                         <td  class="answer">{{quizitem.footprint}}</td>
                     </tr>
                     {% endfor %}
