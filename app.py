@@ -71,7 +71,39 @@ def index():
         else:
             return render_template("index.html")
     else:
-        return render_template("index.html")
+        sql_exec =  "SELECT                                                                  " \
+                    "       DF.name AS impact_factor                                         " \
+                    "     , SUM(FAFFW.impact_weight * FAFFW.frequency_weight) AS Footprint   " \
+                    " FROM public.fact_quiz_answers QA                                       " \
+                    " INNER JOIN public.fact_activity_factor_freq_weights FAFFW              " \
+                    " ON 1=1                                                                 " \
+                    "     AND QA.activity_id = FAFFW.activity_id                             " \
+                    "     AND QA.frequency_id = FAFFW.frequency_id                           " \
+                    " INNER JOIN public.dim_impact_factors DF                                " \
+                    " ON 1=1                                                                 " \
+                    "     AND DF.id = FAFFW.impact_factor_id                                 " \
+                    " GROUP BY   DF.name                                          			 " \
+                    " ORDER BY Footprint DESC                                                " \
+                    "     ;                                                                  "
+
+        sql_count = "SELECT                                                                  " \
+                    "     COUNT(DISTINCT user_id)                                            " \
+                    "FROM                                                                    " \
+                    "     public.fact_quiz_answers                                           " \
+                    "     ;                                                                  " \
+                        
+        db.execute(sql_exec)
+        rows = db.fetchall()
+        db.execute(sql_count)
+        count = db.fetchall()
+
+        quizitems = []
+        for row in rows:
+            quizitems.append(
+                {"impact_factor": row["impact_factor"], "footprint": int(row["footprint"]/count[0][0])})
+
+        return render_template("index.html", quizitems=quizitems,)
+        
 
 
 @app.route("/register", methods=["GET", "POST"])

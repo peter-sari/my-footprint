@@ -34,6 +34,32 @@
         
         {% endif %}
     {% else %}
-        <p>You need to log in to see your footprint</p>
+            <div class="container">
+            <h1>This is</h1>
+            <p class="normaltext">the average ecological footprint of those who have completed our questionaire. Log in (or register) and complete the quiz to see how you compare to the average.</p>
+            <p>{{count}}</p>    
+            <table style="width: 100%;">
+                <thead>
+                    <th class="question">Impact on</th>
+                    <th class="answer">Footprint factor</th>
+                </thead>
+                <tbody>
+                    {% for quizitem in quizitems %}
+                        {% if quizitem.footprint < 15: %}
+                            <tr style="border-top:1pt solid black; background-color:greenyellow;">
+                        {% elif quizitem.footprint < 30: %}
+                            <tr style="border-top:1pt solid black; background-color:orange;">
+                        {% else %}
+                            <tr style="border-top:1pt solid black; background-color:orangered;">
+                        {% endif %}
+                        <td  class="question">{{quizitem.impact_factor}}</td>
+                        <td  class="answer">{{quizitem.footprint}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>        
+
+
     {% endif %}
 {% endblock %}
