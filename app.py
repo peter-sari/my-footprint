@@ -101,6 +101,8 @@ def register():
             return apology("must provide username", 400)
         if len(username) > 40:
             return apology("username must be <= 40 chars long", 400)
+        if " " in username:
+            return apology("spaces are not allowed in username", 400)
 
         # Ensure BY was submitted
         if not birth_year:
