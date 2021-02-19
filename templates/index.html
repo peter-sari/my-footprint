@@ -7,61 +7,33 @@
         <div class="container">
             <h1>Thank you </h1>
             <p class="normaltext">for completing our footprint questionaire! Based on your answers you can see the impact your behaviour has on our world. A little change here and there can make a big difference. Feel free to <a href="/quiz">complete the quiz again</a> to see how your lifestyle changes influence the outcome.</p>
-            <p></p>
-            <table style="width: 100%;">
-                <thead>
-                    <th class="question">Impact on</th>
-                    <th style="text-align: right">Footprint factor</th>
-                </thead>
-                <tbody>
-                    {% for quizitem in quizitems %}
-                        {% if quizitem.footprint < 15: %}
-                            <tr style="border-top:1pt solid black; background-color:greenyellow;">
-                        {% elif quizitem.footprint < 30: %}
-                            <tr style="border-top:1pt solid black; background-color:orange;">
-                        {% else %}
-                            <tr style="border-top:1pt solid black; background-color:orangered;">
-                        {% endif %}
-                        <td  class="question"><p class="q">{{quizitem.impact_factor}}</p></td>
-                        <td  class="answer">{{quizitem.footprint}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        
-            <p>You need to do the quiz first</p>
-        
-        {% endif %}
-    {% else %}
-            <div class="container">
+        {% else %}    
             <h1>This is</h1>
             <p class="normaltext">the average ecological footprint of those who have completed our questionaire. Log in (or register) and complete the quiz to see how you compare to the average.</p>
-            <p>{{count}}</p>    
-            <table style="width: 100%;">
-                <thead>
-                    <th class="question">Impact on</th>
-                    <th style="text-align: right">Footprint factor</th>
-                </thead>
-                <tbody>
-                    {% for quizitem in quizitems %}
-                        {% if quizitem.footprint < 15: %}
-                            <tr style="border-top:1pt solid black; background-color:greenyellow;">
-                        {% elif quizitem.footprint < 30: %}
-                            <tr style="border-top:1pt solid black; background-color:orange;">
-                        {% else %}
-                            <tr style="border-top:1pt solid black; background-color:orangered;">
-                        {% endif %}
-                        <td  class="question"><p class="q">{{quizitem.impact_factor}}</p></td>
-                        <td  class="answer">{{quizitem.footprint}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            
-        </div>        
-
-
+        {% endif %}
+        <p></p>
+        <table style="width: 100%;">
+            <thead>
+                <th class="question">Impact on</th>
+                <th style="text-align: right">Footprint factor</th>
+            </thead>
+            <tbody>
+                {% for quizitem in quizitems %}
+                    {% if quizitem.footprint < 15: %}
+                        <tr style="border-top:1pt solid black; background-color:greenyellow;">
+                    {% elif quizitem.footprint < 30: %}
+                        <tr style="border-top:1pt solid black; background-color:orange;">
+                    {% else %}
+                        <tr style="border-top:1pt solid black; background-color:orangered;">
+                    {% endif %}
+                    <td  class="question"><p class="q" data-toggle="tooltip" title = {{quizitem.description}}>{{quizitem.impact_factor}}</p></td>
+                    <td  class="answer">{{quizitem.footprint}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}    
+        <p>You need to do the quiz first</p>
     {% endif %}
+    </div>
 {% endblock %}
